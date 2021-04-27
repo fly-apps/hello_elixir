@@ -6,6 +6,6 @@ export RELEASE_NODE=$FLY_APP_NAME@$ip
 export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"
 
 # Run migrations before startup
-/app/bin/spice eval "HelloElixir.Release.migrate"
+/app/bin/hello_elixir eval "HelloElixir.Release.migrate"
 
 exec $@
