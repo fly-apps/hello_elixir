@@ -14,7 +14,7 @@ This creates a basic Phoenix application that uses a PostgreSQL database. The El
 
 ## Fly Configuration
 
-- [`fly.toml`](.fly.toml) - Fly deployment configuration
+- [`fly.toml`](./fly.toml) - Fly deployment configuration
 
 ### Secrets
 
