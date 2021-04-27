@@ -4,3 +4,4 @@ _build/
 .git/
 .vscode/
 .elixir_ls/
+erl_crash.dump
