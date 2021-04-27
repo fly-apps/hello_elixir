@@ -7,9 +7,6 @@ kill_timeout = 5
 
 [env]
 
-[experimental]
-private_network = true
-
 [[services]]
   internal_port = 4000
   protocol = "tcp"
