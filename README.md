@@ -80,7 +80,7 @@ The following secret was added to icy-leaf-7381:
 We can see the secrets that Fly is using for our app like this.
 
 ```cmd
-flyclt secrets list
+fly secrets list
 ```
 ```output
 NAME            DIGEST                           DATE      
