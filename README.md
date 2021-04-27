@@ -27,13 +27,13 @@ mix phx.gen.secret
 It generates a long string of random text. Let's store that as a secret for our app. When we run this command in our project folder, `flyctl` uses the `fly.toml` file to know which app we are setting the value on.
 
 ```
-flyctl secrets set SECRET_KEY_BASE=<GENERATED>
+fly secrets set SECRET_KEY_BASE=<GENERATED>
 ```
 
 ### Postgres Database
 
 ```cmd
-flyctl postgres create
+fly postgres create
 ```
 ```output
 ? App name: hello-elixir-db
@@ -69,7 +69,7 @@ We can take the defaults which select the lowest values for CPU, size, etc. This
 We can use `flyctl` to attach our app to the database which also sets our needed `DATABASE_URL` ENV value.
 
 ```cmd
-flyctl postgres attach --postgres-app hello-elixir-db
+fly postgres attach --postgres-app hello-elixir-db
 ```
 ```output
 Postgres cluster hello-elixir-db is now attached to icy-leaf-7381
@@ -92,10 +92,10 @@ Looks like we're ready to deploy!
 
 ## Deploy
 
-Once you've went through the steps of `flyctl launch`:
+Once you've went through the steps of `fly launch`:
 
 ```
-flyctl deploy
+fly deploy
 ```
 
 ... will bring up your app!
