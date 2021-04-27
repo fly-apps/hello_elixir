@@ -10,7 +10,7 @@ This creates a basic Phoenix application that uses a PostgreSQL database. The El
 - [`.dockerignore`](./.dockerignore) - Exclude pulling in Elixir deps and Node packages since they might have native compilation from your dev environment
 - [`entrypoint.sh`](./entrypoint.sh) - Where Docker calls to start the application
 - [`lib/hello_elixir/release.ex`](./lib/hello_elixir/release.ex) - Called by `entrypoint.sh` to run our database migrations
-- [`config/runtime.exs`] - The runtime ENV values we expect for production
+- [`config/runtime.exs`](./config/runtime.exs) - The runtime ENV values we expect for production
 
 ## Fly Configuration
 
