@@ -11,7 +11,7 @@
 #   docker run -it --rm hello_elixir /bin/ash
 
 ###
-### Fist State - Building the Release
+### Fist Stage - Building the Release
 ###
 FROM elixir:1.11-alpine AS build
 
