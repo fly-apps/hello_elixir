@@ -1,7 +1,2 @@
 assets/node_modules/
 deps/
-_build/
-.git/
-.vscode/
-.elixir_ls/
-erl_crash.dump
