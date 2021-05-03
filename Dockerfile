@@ -1,10 +1,7 @@
-# To determine the Alpine release being used:
+# Using the Hex.pm docker images. You have much better version control for Elixir, Erlang and Alpine.:
 #
-#   - Look at the Dockerfile dependencies and follow it back to the base until
-#     reaching the actual alpine version.
-#     - https://hub.docker.com/_/elixir
-#  
-#   - cat /etc/alpine-release
+#   - https://hub.docker.com/r/hexpm/elixir/tags
+#   - Ex: hexpm/elixir:1.11.2-erlang-23.3.2-alpine-3.13.3
 #
 # Debugging Notes:
 #
@@ -13,7 +10,7 @@
 ###
 ### Fist Stage - Building the Release
 ###
-FROM elixir:1.11-alpine AS build
+FROM hexpm/elixir:1.11.2-erlang-23.3.2-alpine-3.13.3 AS build
 
 # install build dependencies
 RUN apk add --no-cache build-base npm
@@ -65,7 +62,7 @@ RUN mix do compile, release
 ###
 
 # prepare release docker image
-FROM alpine:3.13 AS app
+FROM alpine:3.13.3 AS app
 RUN apk add --no-cache openssl ncurses-libs
 
 WORKDIR /app
