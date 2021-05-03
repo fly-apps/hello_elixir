@@ -1,4 +1,5 @@
-# Using the Hex.pm docker images. You have much better version control for Elixir, Erlang and Alpine.:
+# Using the Hex.pm docker images. You have much better version control for
+# Elixir, Erlang and Alpine.
 #
 #   - https://hub.docker.com/r/hexpm/elixir/tags
 #   - Ex: hexpm/elixir:1.11.2-erlang-23.3.2-alpine-3.13.3
