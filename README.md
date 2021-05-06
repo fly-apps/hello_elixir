@@ -8,8 +8,7 @@ This creates a basic Phoenix application that uses a PostgreSQL database. The El
 
 - [`Dockerfile`](./Dockerfile) - An Elixir release is built through Docker
 - [`.dockerignore`](./.dockerignore) - Exclude pulling in Elixir deps and Node packages since they might have native compilation from your dev environment
-- [`entrypoint.sh`](./entrypoint.sh) - Where Docker calls to start the application
-- [`lib/hello_elixir/release.ex`](./lib/hello_elixir/release.ex) - Called by `entrypoint.sh` to run our database migrations
+- [`lib/hello_elixir/release.ex`](./lib/hello_elixir/release.ex) - Executed during deploy from `fly.toml` to run our database migrations
 - [`config/runtime.exs`](./config/runtime.exs) - The runtime ENV values we expect for production
 
 ## Fly Configuration
@@ -83,8 +82,8 @@ We can see the secrets that Fly is using for our app like this.
 fly secrets list
 ```
 ```output
-NAME            DIGEST                           DATE      
-DATABASE_URL    830d8769ff33cba6c8b29d1cd6a6fbac 1m10s ago 
+NAME            DIGEST                           DATE
+DATABASE_URL    830d8769ff33cba6c8b29d1cd6a6fbac 1m10s ago
 SECRET_KEY_BASE 84c992ac7ef334c21f2aaecd41c43666 9m20s ago
 ```
 
