@@ -10,7 +10,8 @@ defmodule HelloElixir.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -60,6 +61,18 @@ defmodule HelloElixir.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+    ]
+  end
+
+  defp releases() do
+    [
+      hello_elixir: [
+        include_executables_for: [:unix],
+        # NOTE: You can generate a unique cookie for your project using
+        # `Base.url_encode64(:crypto.strong_rand_bytes(40))` and use that for
+        # the cookie value.
+        cookie: "YOUR-COOKIE-VALUE"
+      ]
     ]
   end
 end
