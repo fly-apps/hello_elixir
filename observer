@@ -36,4 +36,4 @@ echo Attempting to connect to $FULL_NODE_NAME
 # Export the BEAM settings for running the "iex" command.
 # This creates a local node named "my_remote". The name used isn't important.
 # The cookie must match the cookie used in your project so the two nodes can connect.
-(export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"; iex --sname my_remote --hidden --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start")
+(export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"; iex --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start")
