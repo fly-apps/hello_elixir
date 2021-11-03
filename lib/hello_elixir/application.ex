@@ -5,6 +5,7 @@ defmodule HelloElixir.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
     topologies = Application.get_env(:libcluster, :topologies) || []
 
@@ -31,6 +32,7 @@ defmodule HelloElixir.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     HelloElixirWeb.Endpoint.config_change(changed, removed)
     :ok
