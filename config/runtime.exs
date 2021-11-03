@@ -16,7 +16,8 @@ if config_env() == :prod do
 
   config :hello_elixir, HelloElixir.Repo,
     # ssl: true,
-    # socket_options: [:inet6],
+    # IMPORTANT: Or it won't find the DB server
+    socket_options: [:inet6],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
