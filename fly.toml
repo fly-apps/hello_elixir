@@ -1,22 +1,31 @@
-# fly.toml file generated for icy-leaf-7381 on 2021-04-26T16:24:39-06:00
+# fly.toml file generated for fly-elixir on 2021-11-03T10:49:02-06:00
 
-app = "icy-leaf-7381"
+app = "fly-elixir"
 
 kill_signal = "SIGTERM"
 kill_timeout = 5
+processes = []
+
+[deploy]
+  release_command = "/app/entry eval HelloElixir.Release.migrate"
 
 [env]
 
-[deploy]
-  release_command = "/app/bin/hello_elixir eval HelloElixir.Release.migrate"
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
 
 [[services]]
+  http_checks = []
   internal_port = 4000
+  processes = ["app"]
   protocol = "tcp"
+  script_checks = []
 
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
+    type = "connections"
 
   [[services.ports]]
     handlers = ["http"]
@@ -27,7 +36,7 @@ kill_timeout = 5
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "30s" # allow some time for startup
+    grace_period = "30s"
     interval = "15s"
-    restart_limit = 6
+    restart_limit = 0
     timeout = "2s"
