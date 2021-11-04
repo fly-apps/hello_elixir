@@ -15,8 +15,6 @@
 ARG BUILDER_IMAGE="hexpm/elixir:1.12.3-erlang-24.1.4-debian-bullseye-20210902-slim"
 ARG RUNNER_IMAGE="debian:bullseye-20210902-slim"
 
-ARG MIX_ENV="prod"
-
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
@@ -31,8 +29,7 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 # set build ENV
-ARG MIX_ENV
-ENV MIX_ENV="${MIX_ENV}"
+ENV MIX_ENV="prod"
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
@@ -74,7 +71,6 @@ RUN mix release
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE}
-ARG MIX_ENV="prod"
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
@@ -90,13 +86,13 @@ WORKDIR "/app"
 RUN chown nobody /app
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/"${MIX_ENV}"/rel ./
+COPY --from=builder --chown=nobody:root /app/_build/prod/rel ./
 
 USER nobody
 
 # Create a symlink to the application directory by extracting the directory name. This is required
 # since the release directory will be named after the application, and we don't know that name.
 RUN set -eux; \
-  ln -nfs $(basename *)/bin/$(basename *) /app/entry
+  ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
 
 CMD /app/entry start
