@@ -38,7 +38,6 @@ if config_env() == :prod do
       raise "FLY_APP_NAME not available"
 
   config :hello_elixir, HelloElixirWeb.Endpoint,
-    server: true,
     url: [host: "#{app_name}.fly.dev", port: 80],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -55,10 +54,7 @@ if config_env() == :prod do
   # If you are doing OTP releases, you need to instruct Phoenix
   # to start each relevant endpoint:
   #
-  #     config :hello_elixir, HelloElixirWeb.Endpoint, server: true
-  #
-  # Then you can assemble a release by calling `mix release`.
-  # See `mix help release` for more information.
+  config :hello_elixir, HelloElixirWeb.Endpoint, server: true
 
   # ## Configuring the mailer
   #
