@@ -10,6 +10,9 @@ processes = []
   release_command = "/app/entry eval HelloElixir.Release.migrate"
 
 [env]
+  # Tell Fly which region is the "primary" region for this app. "lax" is "Los
+  # Angeles, CA USA". Use the desired region for your deployment.
+  PRIMARY_REGION = "lax"
 
 [experimental]
   allowed_public_ports = []
