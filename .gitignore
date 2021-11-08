@@ -33,3 +33,5 @@ hello_elixir-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore `direnv` files
+.envrc
