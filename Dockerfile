@@ -90,8 +90,9 @@ COPY --from=builder --chown=nobody:root /app/_build/prod/rel ./
 
 USER nobody
 
-# Create a symlink to the application directory by extracting the directory name. This is required
-# since the release directory will be named after the application, and we don't know that name.
+# Create a symlink to the command that starts your application. This is required
+# since the release directory and start up script are named after the
+# application, and we don't know that name.
 RUN set -eux; \
   ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
 
