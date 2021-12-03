@@ -7,9 +7,12 @@ kill_timeout = 5
 processes = []
 
 [deploy]
-  release_command = "/app/entry eval HelloElixir.Release.migrate"
+  release_command = "/app/bin/migrate"
 
 [env]
+  PHX_HOST = "fly-elixir.fly.dev"
+  ECTO_IPV6 = "true"
+  ERL_AFLAGS = "-proto_dist inet6_tcp"
 
 [experimental]
   allowed_public_ports = []
