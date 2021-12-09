@@ -1,8 +1,8 @@
-# fly.toml file generated for fly-elixir on 2021-11-03T10:49:02-06:00
+# fly.toml file generated for small-brook-8463 on 2021-12-09T13:36:17+01:00
 
-app = "fly-elixir"
+app = "small-brook-8463"
 
-kill_signal = "SIGTERM"
+kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
@@ -10,9 +10,8 @@ processes = []
   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "fly-elixir.fly.dev"
-  ECTO_IPV6 = "true"
-  ERL_AFLAGS = "-proto_dist inet6_tcp"
+  PHX_HOST = "small-brook-8463.fly.dev"
+  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
@@ -20,7 +19,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 4000
+  internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
@@ -39,7 +38,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "30s"
+    grace_period = "1s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"

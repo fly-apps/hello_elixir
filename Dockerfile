@@ -10,9 +10,9 @@
 #   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
 #   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20210902-slim - for the release image
 #   - https://pkgs.org/ - resource for finding needed packages
-#   - Ex: hexpm/elixir:1.12.3-erlang-24.1.4-debian-bullseye-20210902-slim
+#   - Ex: hexpm/elixir:1.12.3-erlang-24.1.7-debian-bullseye-20210902-slim
 #
-ARG BUILDER_IMAGE="hexpm/elixir:1.12.3-erlang-24.1.4-debian-bullseye-20210902-slim"
+ARG BUILDER_IMAGE="hexpm/elixir:1.12.3-erlang-24.1.7-debian-bullseye-20210902-slim"
 ARG RUNNER_IMAGE="debian:bullseye-20210902-slim"
 
 FROM ${BUILDER_IMAGE} as builder
@@ -87,3 +87,6 @@ COPY --from=builder --chown=nobody:root /app/_build/prod/rel/hello_elixir ./
 USER nobody
 
 CMD /app/bin/server
+# Appended by flyctl
+ENV ECTO_IPV6 true
+ENV ERL_AFLAGS "-proto_dist inet6_tcp"
