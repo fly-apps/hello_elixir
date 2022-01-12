@@ -79,6 +79,8 @@ if config_env() == :dev do
   database_url = System.get_env("DATABASE_URL")
 
   if database_url != nil do
-    config :hello_elixir, HelloElixir.Repo, url: database_url
+    config :hello_elixir, HelloElixir.Repo, 
+      url: database_url,
+      socket_options: [:inet6]
   end
 end
