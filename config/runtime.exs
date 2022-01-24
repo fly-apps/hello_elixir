@@ -14,10 +14,14 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
+  ipv6? = System.get_env("ECTO_IPV6") == "true"
+  host = System.get_env("PHX_HOST") || "example.com"
+  server? = System.get_env("PHX_SERVER") == "true"
+
   config :hello_elixir, HelloElixir.Repo,
     # ssl: true,
     # IMPORTANT: Or it won't find the DB server
-    socket_options: [:inet6],
+    socket_options: if(ipv6?, do: [:inet6], else: []),
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -38,7 +42,8 @@ if config_env() == :prod do
       raise "FLY_APP_NAME not available"
 
   config :hello_elixir, HelloElixirWeb.Endpoint,
-    url: [host: "#{app_name}.fly.dev", port: 80],
+    url: [host: host, port: 80],
+    server: server?,
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
