@@ -26,5 +26,7 @@ config :hello_elixir, HelloElixir.Mailer, adapter: Swoosh.Adapters.Test
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :hello_elixir, Oban, queues: false, plugins: false
+
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
