@@ -38,7 +38,7 @@ if config_env() == :prod do
       raise "FLY_APP_NAME not available"
 
   config :hello_elixir, HelloElixirWeb.Endpoint,
-    url: [host: "#{app_name}.fly.dev", port: 80],
+    url: [host: "#{app_name}.fly.dev", port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
