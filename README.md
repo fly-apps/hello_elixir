@@ -68,7 +68,7 @@ We can take the defaults which select the lowest values for CPU, size, etc. This
 We can use `flyctl` to attach our app to the database which also sets our needed `DATABASE_URL` ENV value.
 
 ```cmd
-fly postgres attach --postgres-app hello-elixir-db
+fly postgres attach hello-elixir-db
 ```
 ```output
 Postgres cluster hello-elixir-db is now attached to icy-leaf-7381
