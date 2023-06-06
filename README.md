@@ -2,6 +2,16 @@
 
 This is an example project demonstrating how to deploy an Elixir and Phoenix application on Fly.io.
 
+[<img src="https://fly.io/phx/images/button.png" width="234" alt="Fly.io" />](http://fly.io/?s=hello_elixir)
+
+## Deploy Instructions
+
+Using [the Fly CLI](https://fly.io/docs/flyctl/) run the following:
+
+```bash
+fly launch
+```
+
 ## Application Structure
 
 This creates a basic Phoenix application that uses a PostgreSQL database. The Elixir deployment approach used here is building a release through Docker.
