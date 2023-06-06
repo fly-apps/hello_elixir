@@ -2,9 +2,11 @@
 
 This is an example project demonstrating how to deploy an Elixir and Phoenix application on Fly.io.
 
+[<img src="https://fly.io/phx/images/button.png" width="234" alt="Fly.io" />](http://fly.io/?s=hello_elixir)
+
 ## Deploy Instructions
 
-Using [the FlyCTL CLI](https://fly.io/docs/flyctl/) run the following:
+Using [the Fly CLI](https://fly.io/docs/flyctl/) run the following:
 
 ```bash
 fly launch
