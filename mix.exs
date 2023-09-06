@@ -20,7 +20,7 @@ defmodule HelloElixir.MixProject do
   def application do
     [
       mod: {HelloElixir.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :inets]
     ]
   end
 
@@ -35,6 +35,7 @@ defmodule HelloElixir.MixProject do
     [
       {:phoenix, "~> 1.6.3"},
       {:phoenix_ecto, "~> 4.4"},
+      {:ecto, "~> 3.10.3", override: true},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
