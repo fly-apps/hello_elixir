@@ -9,8 +9,10 @@ This is an example project demonstrating how to deploy an Elixir and Phoenix app
 Using [the Fly CLI](https://fly.io/docs/flyctl/) run the following:
 
 ```bash
-fly launch
+fly launch --build-only
 ```
+
+This command creates a Fly app, generates a new Phoenix key base secret, sets it as a secret for our app and builds a docker image with the Dockerfile.
 
 ## Application Structure
 
@@ -24,20 +26,6 @@ This creates a basic Phoenix application that uses a PostgreSQL database. The El
 ## Fly Configuration
 
 - [`fly.toml`](./fly.toml) - Fly deployment configuration
-
-### Secrets
-
-Elixir has a mix task that can generate a new Phoenix key base secret. Let's use that.
-
-```bash
-mix phx.gen.secret
-```
-
-It generates a long string of random text. Let's store that as a secret for our app. When we run this command in our project folder, `flyctl` uses the `fly.toml` file to know which app we are setting the value on.
-
-```
-fly secrets set SECRET_KEY_BASE=<GENERATED>
-```
 
 ### Postgres Database
 
@@ -78,7 +66,7 @@ We can take the defaults which select the lowest values for CPU, size, etc. This
 We can use `flyctl` to attach our app to the database which also sets our needed `DATABASE_URL` ENV value.
 
 ```cmd
-fly postgres attach --postgres-app hello-elixir-db
+fly postgres attach hello-elixir-db
 ```
 ```output
 Postgres cluster hello-elixir-db is now attached to icy-leaf-7381
