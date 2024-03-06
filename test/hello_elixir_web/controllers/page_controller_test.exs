@@ -2,7 +2,7 @@ defmodule HelloElixirWeb.PageControllerTest do
   use HelloElixirWeb.ConnCase
 
   test "GET /", %{conn: conn} do
-    conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    conn = get(conn, ~p"/")
+    assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
   end
 end

@@ -2,97 +2,118 @@
 
 This is an example project demonstrating how to deploy an Elixir and Phoenix application on Fly.io.
 
-[<img src="https://fly.io/phx/images/button.png" width="234" alt="Fly.io" />](http://fly.io/?s=hello_elixir)
+This was created using `mix phx.new hello_elixir` with the following versions:
 
-## Deploy Instructions
+- erlang - 26.2.2
+- elixir - 1.16.1-otp-26
+- phoenix - 1.7.11
 
-Using [the Fly CLI](https://fly.io/docs/flyctl/) run the following:
+## Deploy steps
 
-```bash
-fly launch --build-only
+Install [`flyctl`](https://fly.io/docs/hands-on/install-flyctl/), the command line interface we use for controlling our application.
+
+With the `fly` command available, we launch!
+
+```
+fly launch
 ```
 
-This command creates a Fly app, generates a new Phoenix key base secret, sets it as a secret for our app and builds a docker image with the Dockerfile.
-
-## Application Structure
-
-This creates a basic Phoenix application that uses a PostgreSQL database. The Elixir deployment approach used here is building a release through Docker.
-
-- [`Dockerfile`](./Dockerfile) - An Elixir release is built through Docker
-- [`.dockerignore`](./.dockerignore) - Exclude pulling in Elixir deps and Node packages since they might have native compilation from your dev environment
-- [`lib/hello_elixir/release.ex`](./lib/hello_elixir/release.ex) - Executed during deploy from `fly.toml` to run our database migrations
-- [`config/runtime.exs`](./config/runtime.exs) - The runtime ENV values we expect for production
-
-## Fly Configuration
-
-- [`fly.toml`](./fly.toml) - Fly deployment configuration
-
-### Postgres Database
-
-```cmd
-fly postgres create
+Output:
 ```
-```output
-? App name: hello-elixir-db
-Automatically selected personal organization: Mark Ericksen
-? Select region: sea (Seattle, Washington (US))
-? Select VM size: shared-cpu-1x - 256
-? Volume size (GB): 10
-Creating postgres cluster hello-elixir-db in organization personal
-Postgres cluster hello-elixir-db created
-  Username:    <USER>
-  Password:    <PASSWORD>
-  Hostname:    hello-elixir-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place, you won't be able to see them again!
+Scanning source code
+Resolving Hex dependencies...
+Resolution completed in 0.114s
+Unchanged:
+  bandit 1.2.3
+  ...
+  websock_adapter 0.5.5
+All dependencies are up to date
+Detected a Phoenix app
+Creating app in /home/user/hello_elixir
+We're about to launch your Phoenix app on Fly.io. Here's what you're getting:
 
-Monitoring Deployment
+Organization: Your Name                 (fly launch defaults to the personal org)
+Name:         hello-elixir              (derived from your directory name)
+Region:       San Jose, California (US) (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM    (most apps need about 1GB of RAM)
+Postgres:     <none>                    (not requested)
+Redis:        <none>                    (not requested)
 
-2 desired, 2 placed, 2 healthy, 0 unhealthy [health checks: 6 total, 6 passing]
---> v0 deployed successfully
-
-Connect to postgres
-Any app within the personal organization can connect to postgres using the above credentials and the hostname "hello-elixir-db.internal."
-For example: postgres://<USER>:<PASSWORD>@hello-elixir-db.internal:5432
-
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+? Do you want to tweak these settings before proceeding? Yes
+Opening https://fly.io/cli/launch/d0ec26d8b93c3ce8efe94855b1ea ...
 ```
 
-We can take the defaults which select the lowest values for CPU, size, etc. This is perfect for getting started.
+If you want a Postgres database, answer "yes" to tweak the settings. You'll be taken to a webpage where you can change the selections.
 
-### Attach our App to the Database
+After the process completes, your app is launched!
 
-We can use `flyctl` to attach our app to the database which also sets our needed `DATABASE_URL` ENV value.
+## Clustering
 
-```cmd
-fly postgres attach hello-elixir-db
-```
-```output
-Postgres cluster hello-elixir-db is now attached to icy-leaf-7381
-The following secret was added to icy-leaf-7381:
-  DATABASE_URL=postgres://<NEW_USER>:<NEW_PASSWORD>@hello-elixir-db.internal:5432/icy_leaf_7381?sslmode=disable
-```
+A recently generated Phoenix app already includes [`dns_cluster`](https://github.com/phoenixframework/dns_cluster) in the project! That means we'll already be clustering when we deploy multiple instances.
 
-We can see the secrets that Fly is using for our app like this.
+By default, the Erlang COOKIE is uniquely generated for each new build. This still allows for clustering, but we can explicitly set it to make it allow some other neat abilities.
 
-```cmd
-fly secrets list
-```
-```output
-NAME            DIGEST                           DATE
-DATABASE_URL    830d8769ff33cba6c8b29d1cd6a6fbac 1m10s ago
-SECRET_KEY_BASE 84c992ac7ef334c21f2aaecd41c43666 9m20s ago
+You can read more about that in [Clustering: The Cookie Situation](https://fly.io/docs/elixir/the-basics/clustering/#the-cookie-situation).
+https://fly.io/docs/elixir/the-basics/clustering/#adding-dns_cluster
+
+In our `fly.toml` file, we'll add and ENV setting for the cookie value we want to use. It looks like this:
+
+```toml
+[env]
+  RELEASE_COOKIE = "my-app-cookie"
 ```
 
-Looks like we're ready to deploy!
+Run `fly deploy` after setting this ENV to make it take effect.
 
-## Deploy
+## Observer
 
-Once you've went through the steps of `fly launch`:
+Elixir and Erlang have a built-in tool called Observer that let's us explore a running system. You can read more about that in [Connecting Observer to Your App in Production](https://fly.io/docs/elixir/advanced-guides/connect-observer-to-your-app/).
+
+## Deploying
+
+Once you've gone through the steps of `fly launch`:
 
 ```
 fly deploy
 ```
 
-... will bring up your app!
+... will deploy your changes!
+
+To open your app in a browser:
+
+```
+fly apps open
+```
+
+To access your Fly.io dashboard:
+
+```
+fly dashboard
+```
+
+To access your logs locally:
+
+```
+fly logs
+```
+
+## Digging deeper
+
+### Dockerfile
+
+Where did the Dockerfile come from?
+
+The `fly launch` process detects our Phoenix application and runs [`mix phx.gen.release`](https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Release.html#module-docker) to generate the release files and a Dockerfile, which can be further customized for the project as needed.
+
+### `fly.toml`
+
+The `fly launch` command generates the `fly.toml` file for us. That includes the following command:
+
+```toml
+[deploy]
+  release_command = '/app/bin/migrate'
+```
+
+This runs our migrations before starting the app on a deploy.
+
+You can check out the `fly.example.toml` file as a reference.

@@ -1,6 +1,5 @@
 # The directory Mix will write compiled artifacts to.
 /_build/
-/.elixir_ls/
 
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
@@ -17,8 +16,13 @@
 # If the VM crashes, it generates a dump, let's ignore it too.
 erl_crash.dump
 
+/.elixir_ls/
+
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
+
+# Temporary files, for example, from tests.
+/tmp/
 
 # Ignore package tarball (built via "mix hex.build").
 hello_elixir-*.tar
@@ -33,3 +37,5 @@ hello_elixir-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Direnv file for loading ENV values
+.envrc
